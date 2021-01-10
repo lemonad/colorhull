@@ -1,0 +1,28 @@
+Package: colorhull
+Title: Extract Image Color Themes
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Jonas",
+           family = "Nockert",
+           role = c("aut", "cre"),
+           email = "jonasnockert@gmail.com",
+           comment = c(ORCID = "0000-0002-5425-4992"))
+Description: An implementation of the palette extraction part of Tan,
+    Echevarria and Gingold's paper "Efficient palette-based decomposition and
+    recoloring of images via RGBXY-space geometry" (2018). Needs `qhull`
+    and `glpk` installed locally.
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports:
+    colorscience,
+    dplyr,
+    geometry,
+    magick,
+    magrittr,
+    pracma,
+    purrr,
+    reticulate,
+    Rglpk,
+    stringr
