@@ -1,14 +1,3 @@
-# library(dplyr)
-# library(geometry)
-# library(colorscience)
-# library(reticulate)
-# library(magick)
-# library(magrittr)
-# library(pracma)
-# library(purrr)
-# library(Rglpk)
-# library(stringr)
-
 #' @importFrom magrittr "%>%"
 
 clip <- function(m, a, b) {
@@ -233,7 +222,7 @@ vertex_to_face <- function(faces) {
 }
 
 # hull_simplification_determined_version
-hull_simplification <- function(rgb) {
+hull_simplification <- function(rgb, n_colors) {
   stop_early_rgb <- NA
   hull <- tryCatch(
     geometry::convhulln(rgb, output.options = TRUE),
@@ -278,19 +267,20 @@ hull_simplification <- function(rgb) {
     v <- remove_one_edge(faces, normals, edges, vertices, v2f)
     hull <- geometry::convhulln(v[, c("r", "g", "b")], output.options = TRUE)
 
-    if (nrow(hull$p) == old_num || nrow(hull$p) <= 8) {
+    if (nrow(hull$p) == old_num || nrow(hull$p) <= n_colors) {
       return(clip(hull$p, 0, 1))
     }
   }
-  error("Did not find 8 colors")
+  error(paste("Did not find", n_colors, "colors"))
 }
 
 #' Create a theme for an image
 #'
 #' @param path Image path
+#' @param n_colors Size of theme palette
 #' @return Image color theme
 #' @export
-get_theme_colors_from_image <- function(path) {
+get_theme_colors_from_image <- function(path, n_colors) {
   im_resized <- magick::image_read(path) %>%
     magick::image_resize("10%", filter = "Point")
   im <- im_resized %>%
@@ -299,7 +289,7 @@ get_theme_colors_from_image <- function(path) {
   d <- dim(im)
   rgb <- reticulate::array_reshape(im, c(d[[1]] * d[[2]], 3))
 
-  colors_rgb <- hull_simplification(rgb)
+  colors_rgb <- hull_simplification(rgb, n_colors = n_colors)
   colors_lms <- colorscience::RGB2LMS(colors_rgb)
   sorted_rgb <- colors_rgb[
     order(
@@ -309,7 +299,7 @@ get_theme_colors_from_image <- function(path) {
       decreasing = TRUE
     ),
   ]
-  # print(nrow(sorted_rgb))
+
   image(
     seq_len(nrow(sorted_rgb)),
     1,
@@ -327,20 +317,15 @@ get_theme_colors_from_image <- function(path) {
 #' Create themes for all images in a directory
 #'
 #' @param path Directory to search for images
+#' @param n_colors Size of theme palette
 #' @return List of image color themes
 #' @export
-get_theme_colors_from_dir <- function(path, pattern = "*.jpg") {
+get_theme_colors_from_dir <- function(path, n_colors, pattern = "*.jpg") {
   images <- list.files(path, pattern = pattern)
   map(
     images,
     function(x) {
-      get_theme_colors_from_image(paste0(path, x))
+      get_theme_colors_from_image(paste0(path, x), n_colors = n_colors)
     }
   )
 }
-
-# for (year in seq(2012, 2020)) {
-#   print(paste("--------------", year, "------------"))
-#   rgb_list <- get_theme_colors(year)
-#   save(rgb_list, file = paste0("colors", year, ".RData"))
-# }

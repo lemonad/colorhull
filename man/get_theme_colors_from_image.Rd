@@ -4,10 +4,12 @@
 \alias{get_theme_colors_from_image}
 \title{Create a theme for an image}
 \usage{
-get_theme_colors_from_image(path)
+get_theme_colors_from_image(path, n_colors)
 }
 \arguments{
 \item{path}{Image path}
+
+\item{n_colors}{Size of theme palette}
 }
 \value{
 Image color theme

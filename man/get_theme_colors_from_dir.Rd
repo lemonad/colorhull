@@ -4,10 +4,12 @@
 \alias{get_theme_colors_from_dir}
 \title{Create themes for all images in a directory}
 \usage{
-get_theme_colors_from_dir(path, pattern = "*.jpg")
+get_theme_colors_from_dir(path, n_colors, pattern = "*.jpg")
 }
 \arguments{
 \item{path}{Directory to search for images}
+
+\item{n_colors}{Size of theme palette}
 }
 \value{
 List of image color themes
