@@ -1,6 +1,7 @@
 An R implementation of the palette extraction part of Tam, Echevarria and
-Gingold's paper "Efficient palette-based decomposition and recoloring of
-images via RGBXY-space geometry" (2018).
+Gingold's paper ”Efficient palette-based decomposition and recoloring of
+images via RGBXY-space geometry](https://cragl.cs.gmu.edu/fastlayers/)”
+(2018).
 
 Needs `qhull` and `glpk` installed locally.
 
