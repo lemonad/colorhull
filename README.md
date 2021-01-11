@@ -3,7 +3,7 @@ Gingold's paper ”[Efficient palette-based decomposition and recoloring of
 images via RGBXY-space geometry](https://cragl.cs.gmu.edu/fastlayers/)”
 (2018).
 
-Needs `qhull` and `glpk` installed locally.
+Needs `glpk` installed locally.
 
 ### Examples
 Extracting palettes using k-means often misses perceptually important colors:

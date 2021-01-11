@@ -299,18 +299,6 @@ get_theme_colors_from_image <- function(path, n_colors) {
       decreasing = TRUE
     ),
   ]
-
-  image(
-    seq_len(nrow(sorted_rgb)),
-    1,
-    as.matrix(seq_len(nrow(sorted_rgb))),
-    col = rgb(sorted_rgb),
-    xlab = "",
-    ylab = "",
-    xaxt = "n",
-    yaxt = "n",
-    bty = "n"
-  )
   sorted_rgb
 }
 
